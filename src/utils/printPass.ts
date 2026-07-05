@@ -20,7 +20,7 @@ function buildReceiptHtml(result: PassActionResponse): string {
 <meta charset="utf-8" />
 <style>
   @page {
-    size: 80mm auto;
+    size: 70mm 210mm;
     margin: 0;
   }
   * {
@@ -29,9 +29,9 @@ function buildReceiptHtml(result: PassActionResponse): string {
     box-sizing: border-box;
   }
   body {
-    width: 72mm;
-    margin: 0 auto;
-    padding: 4mm 2mm;
+    width: 70mm;
+    margin: 0;
+    padding: 6mm 3mm 12mm;
     font-family: 'Courier New', monospace;
     color: #000;
     background: #fff;
