@@ -1,0 +1,253 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(24px, -32px) scale(1.08);
+  }
+}
+
+@keyframes floatAlt {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-32px, 24px) scale(1.12);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(45, 142, 132, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(45, 142, 132, 0);
+  }
+}
+
+/* ---------- Login ---------- */
+
+.login-bg {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #eef7f6 0%, #e2f0ee 40%, #d3ebe7 100%);
+}
+
+.login-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.login-blob--one {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -100px;
+  background: linear-gradient(135deg, #2d8e84, #5cbdb2);
+  animation: float 14s ease-in-out infinite;
+}
+
+.login-blob--two {
+  width: 360px;
+  height: 360px;
+  bottom: -100px;
+  right: -80px;
+  background: linear-gradient(135deg, #35a396, #8fd6cc);
+  animation: floatAlt 18s ease-in-out infinite;
+}
+
+.login-card {
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 24px 64px -16px rgba(19, 78, 72, 0.25),
+    0 4px 16px -4px rgba(19, 78, 72, 0.08) !important;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.92) !important;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.login-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 22px;
+  background: linear-gradient(135deg, #2d8e84, #45b3a6);
+  box-shadow: 0 8px 20px -6px rgba(45, 142, 132, 0.5);
+}
+
+/* ---------- Gradient button ---------- */
+
+.btn-gradient.ant-btn-primary {
+  background: linear-gradient(135deg, #2d8e84 0%, #3aa596 100%);
+  border: none;
+  box-shadow: 0 8px 20px -8px rgba(45, 142, 132, 0.55);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.btn-gradient.ant-btn-primary:not(:disabled):hover {
+  background: linear-gradient(135deg, #35a396 0%, #45b3a6 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -8px rgba(45, 142, 132, 0.6);
+}
+
+.btn-gradient.ant-btn-primary:not(:disabled):active {
+  transform: translateY(0);
+  filter: brightness(0.96);
+}
+
+/* ---------- Dashboard ---------- */
+
+.dash-layout {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 400px at 50% -100px, rgba(45, 142, 132, 0.1), transparent),
+    #f6f9f8;
+}
+
+.dash-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 142, 132, 0.12);
+  animation: fadeIn 0.4s ease both;
+}
+
+.dash-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  background: linear-gradient(135deg, #2d8e84, #45b3a6);
+  box-shadow: 0 6px 14px -6px rgba(45, 142, 132, 0.5);
+}
+
+.dash-card {
+  max-width: 860px;
+  margin: 0 auto;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow:
+    0 16px 48px -20px rgba(19, 78, 72, 0.18),
+    0 2px 8px -2px rgba(19, 78, 72, 0.06) !important;
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* ---------- Full-width tabs ---------- */
+
+.full-tabs .ant-tabs-nav::before {
+  border-bottom-color: rgba(45, 142, 132, 0.12);
+}
+
+.full-tabs .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.full-tabs .ant-tabs-tab {
+  flex: 1;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 14px 8px;
+  transition: background 0.2s ease;
+  border-radius: 10px 10px 0 0;
+}
+
+.full-tabs .ant-tabs-tab:hover {
+  background: rgba(45, 142, 132, 0.06);
+}
+
+.full-tabs .ant-tabs-ink-bar {
+  height: 3px !important;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(90deg, #2d8e84, #45b3a6) !important;
+}
+
+/* ---------- Scan panel (tab content) ---------- */
+
+.scan-panel {
+  animation: fadeInUp 0.35s ease both;
+}
+
+.scan-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #2d8e84;
+  background: linear-gradient(135deg, rgba(45, 142, 132, 0.12), rgba(69, 179, 166, 0.18));
+  box-shadow: inset 0 0 0 1px rgba(45, 142, 132, 0.15);
+}
+
+.scan-input.ant-input,
+.scan-input .ant-input {
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.scan-input.ant-input:focus,
+.scan-input.ant-input-focused {
+  animation: pulseRing 0.8s ease-out;
+}
