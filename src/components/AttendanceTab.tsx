@@ -53,7 +53,7 @@ function AttendanceTab() {
         onChange={(e) => setPassNumber(e.target.value)}
         onPressEnter={handleSubmit}
         autoFocus
-        style={{ maxWidth: 340, height: 52 }}
+        style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
       <Button
         className="btn-gradient"
@@ -62,7 +62,7 @@ function AttendanceTab() {
         onClick={handleSubmit}
         disabled={!passNumber.trim()}
         loading={mutation.isPending}
-        style={{ width: 340, height: 46 }}
+        style={{ width: '100%', maxWidth: 340, height: 46 }}
       >
         Mark Attendance
       </Button>

@@ -220,6 +220,100 @@ body {
   background: linear-gradient(90deg, #2d8e84, #45b3a6) !important;
 }
 
+/* ---------- Header / content ---------- */
+
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 24px;
+}
+
+.dash-logo {
+  height: 36px;
+}
+
+.dash-title {
+  font-size: 16px;
+}
+
+.dash-content {
+  padding: 24px;
+}
+
+.tab-label-short {
+  display: none;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 640px) {
+  .dash-header {
+    padding-inline: 12px;
+    gap: 8px;
+  }
+
+  .dash-logo {
+    height: 28px;
+  }
+
+  .dash-title {
+    font-size: 14px;
+  }
+
+  .dash-username {
+    display: none;
+  }
+
+  .dash-logout-label {
+    display: none;
+  }
+
+  .dash-content {
+    padding: 10px;
+  }
+
+  .dash-card :where(.ant-card-body) {
+    padding: 12px !important;
+  }
+
+  .full-tabs .ant-tabs-nav-list {
+    width: 100%;
+  }
+
+  .full-tabs .ant-tabs-tab {
+    flex: 1;
+    padding: 8px 2px;
+    font-size: 11px;
+    min-width: 0;
+  }
+
+  .full-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+    width: 100%;
+  }
+
+  .full-tabs .ant-tabs-tab .ant-flex {
+    flex-direction: column;
+    gap: 2px !important;
+    text-align: center;
+    line-height: 1.15;
+  }
+
+  .full-tabs .ant-tabs-tab .anticon {
+    font-size: 17px;
+  }
+
+  .tab-label-full {
+    display: none;
+  }
+
+  .tab-label-short {
+    display: inline;
+    white-space: normal;
+    word-break: break-word;
+  }
+}
+
 /* ---------- Scan panel (tab content) ---------- */
 
 .scan-panel {

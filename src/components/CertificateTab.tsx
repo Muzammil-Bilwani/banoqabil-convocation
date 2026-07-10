@@ -59,9 +59,9 @@ function CertificateTab() {
         onChange={(e) => setPassNumber(e.target.value)}
         onPressEnter={() => handleSubmit('ConvocationKitReceived')}
         autoFocus
-        style={{ maxWidth: 340, height: 52 }}
+        style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
-      <Flex gap={12} style={{ width: 340 }}>
+      <Flex gap={12} style={{ width: '100%', maxWidth: 340 }}>
         <Button
           className="btn-gradient"
           type="primary"

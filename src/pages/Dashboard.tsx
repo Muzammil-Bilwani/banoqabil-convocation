@@ -24,18 +24,10 @@ interface DashboardProps {
 function Dashboard({ user, onLogout }: DashboardProps) {
   return (
     <Layout className="dash-layout">
-      <Header
-        className="dash-header"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingInline: 24,
-        }}
-      >
+      <Header className="dash-header">
         <Flex align="center" gap={10}>
-          <img src={LOGO_URL} alt="Bano Qabil" style={{ height: 36 }} />
-          <Text strong style={{ fontSize: 16 }}>
+          <img src={LOGO_URL} alt="Bano Qabil" className="dash-logo" />
+          <Text strong className="dash-title">
             Convocation
           </Text>
         </Flex>
@@ -46,14 +38,16 @@ function Dashboard({ user, onLogout }: DashboardProps) {
           >
             {user.name.charAt(0)}
           </Avatar>
-          <Text type="secondary">{user.name}</Text>
+          <Text type="secondary" className="dash-username">
+            {user.name}
+          </Text>
           <Button size="small" icon={<LogoutOutlined />} onClick={onLogout}>
-            Logout
+            <span className="dash-logout-label">Logout</span>
           </Button>
         </Flex>
       </Header>
 
-      <Content style={{ padding: 24 }}>
+      <Content className="dash-content">
         <Card className="dash-card" styles={{ body: { paddingTop: 8 } }}>
           <Tabs
             className="full-tabs"
@@ -65,7 +59,8 @@ function Dashboard({ user, onLogout }: DashboardProps) {
                 key: 'attendance',
                 label: (
                   <Flex align="center" gap={8}>
-                    <CheckCircleOutlined /> Attendance
+                    <CheckCircleOutlined />
+                    <span>Attendance</span>
                   </Flex>
                 ),
                 children: <AttendanceTab />,
@@ -74,7 +69,11 @@ function Dashboard({ user, onLogout }: DashboardProps) {
                 key: 'kit-handover',
                 label: (
                   <Flex align="center" gap={8}>
-                    <GiftOutlined /> Convocation Kit Handover
+                    <GiftOutlined />
+                    <span className="tab-label-full">
+                      Convocation Kit Handover
+                    </span>
+                    <span className="tab-label-short">Kit Handover</span>
                   </Flex>
                 ),
                 children: <KitHandoverTab />,
@@ -83,7 +82,11 @@ function Dashboard({ user, onLogout }: DashboardProps) {
                 key: 'certificate',
                 label: (
                   <Flex align="center" gap={8}>
-                    <SafetyCertificateOutlined /> Hand Over & Certificate
+                    <SafetyCertificateOutlined />
+                    <span className="tab-label-full">
+                      Hand Over & Certificate
+                    </span>
+                    <span className="tab-label-short">Certificate</span>
                   </Flex>
                 ),
                 children: <CertificateTab />,
