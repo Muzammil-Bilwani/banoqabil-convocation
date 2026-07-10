@@ -28,8 +28,6 @@ export interface PassActionResponse {
   pass: ConvocationPass
 }
 
-export type PassStatus = 'ConvocationKitReceived' | 'CertificateHandover'
-
 async function authRequest(
   path: string,
   options: RequestInit = {},
@@ -80,9 +78,23 @@ export function markKitHandover(passNumber: string) {
   )
 }
 
-export function updatePassStatus(passNumber: string, status: PassStatus) {
+// Mark the kit as received. The backend requires the pass to be in
+// ConvocationKitHandover first, so this rejects passes that never got a kit
+// and blocks a second "received" marking.
+export function markKitReceived(passNumber: string) {
   return authRequest(
     `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/status`,
-    { method: 'PATCH', body: JSON.stringify({ status }) },
+    { method: 'PATCH', body: JSON.stringify({ status: 'ConvocationKitReceived' }) },
+  )
+}
+
+// Smart certificate issuance: the backend advances the pass to
+// CertificateHandover from whatever the current state is (attended, or
+// kit handover/received), enforcing that attendance happened first and
+// rejecting a second issuance.
+export function issueCertificate(passNumber: string) {
+  return authRequest(
+    `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/certificate`,
+    { method: 'PATCH' },
   )
 }

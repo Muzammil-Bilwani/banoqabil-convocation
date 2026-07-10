@@ -2,33 +2,32 @@ import { useRef, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Alert, Button, Flex, Input, Typography, type InputRef } from 'antd'
 import { InboxOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
-import { updatePassStatus, type PassStatus } from '../api/convocation'
+import { markKitReceived, issueCertificate } from '../api/convocation'
 import ScanResult from './ScanResult'
 
 const { Title, Text } = Typography
+
+type Action = 'kit-received' | 'certificate'
 
 function CertificateTab() {
   const [passNumber, setPassNumber] = useState('')
   const inputRef = useRef<InputRef>(null)
 
   const mutation = useMutation({
-    mutationFn: ({
-      passNumber,
-      status,
-    }: {
-      passNumber: string
-      status: PassStatus
-    }) => updatePassStatus(passNumber, status),
+    mutationFn: ({ passNumber, action }: { passNumber: string; action: Action }) =>
+      action === 'kit-received'
+        ? markKitReceived(passNumber)
+        : issueCertificate(passNumber),
     onSuccess: () => {
       setPassNumber('')
       inputRef.current?.focus()
     },
   })
 
-  const handleSubmit = (status: PassStatus) => {
+  const handleSubmit = (action: Action) => {
     const value = passNumber.trim()
     if (!value || mutation.isPending) return
-    mutation.mutate({ passNumber: value, status })
+    mutation.mutate({ passNumber: value, action })
   }
 
   return (
@@ -57,34 +56,32 @@ function CertificateTab() {
         placeholder="Pass Number"
         value={passNumber}
         onChange={(e) => setPassNumber(e.target.value)}
-        onPressEnter={() => handleSubmit('ConvocationKitReceived')}
+        onPressEnter={() => handleSubmit('certificate')}
         autoFocus
         style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
       <Flex gap={12} style={{ width: '100%', maxWidth: 340 }}>
         <Button
-          className="btn-gradient"
-          type="primary"
           size="large"
           icon={<InboxOutlined />}
-          onClick={() => handleSubmit('ConvocationKitReceived')}
+          onClick={() => handleSubmit('kit-received')}
           disabled={!passNumber.trim()}
           loading={
-            mutation.isPending &&
-            mutation.variables?.status === 'ConvocationKitReceived'
+            mutation.isPending && mutation.variables?.action === 'kit-received'
           }
           style={{ flex: 1, height: 46 }}
         >
           Kit Received
         </Button>
         <Button
+          className="btn-gradient"
+          type="primary"
           size="large"
           icon={<SafetyCertificateOutlined />}
-          onClick={() => handleSubmit('CertificateHandover')}
+          onClick={() => handleSubmit('certificate')}
           disabled={!passNumber.trim()}
           loading={
-            mutation.isPending &&
-            mutation.variables?.status === 'CertificateHandover'
+            mutation.isPending && mutation.variables?.action === 'certificate'
           }
           style={{ flex: 1, height: 46 }}
         >
