@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Alert, Button, Flex, Input, Typography, type InputRef } from 'antd'
 import { CheckCircleOutlined, PrinterOutlined } from '@ant-design/icons'
@@ -11,6 +11,11 @@ const { Title, Text } = Typography
 function AttendanceTab() {
   const [passNumber, setPassNumber] = useState('')
   const inputRef = useRef<InputRef>(null)
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => inputRef.current?.focus())
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   const mutation = useMutation({
     mutationFn: markAttendance,
@@ -52,7 +57,6 @@ function AttendanceTab() {
         value={passNumber}
         onChange={(e) => setPassNumber(e.target.value)}
         onPressEnter={handleSubmit}
-        autoFocus
         style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
       <Button
