@@ -88,12 +88,13 @@ export function markKitReceived(passNumber: string) {
   )
 }
 
-// Reprint a lost token: read-only lookup by pass number. Does NOT change the
-// pass status, so a slip can be reprinted at any stage (attended, kit, etc.).
+// Reprint a lost token: reuses the attendance endpoint with reprint=true, which
+// returns the pass WITHOUT changing status, so a slip can be reprinted at any
+// stage (attended, kit, etc.).
 export function reprintToken(passNumber: string) {
   return authRequest(
-    `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/reprint`,
-    { method: 'GET' },
+    `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/attend?reprint=true`,
+    { method: 'PATCH' },
   )
 }
 
