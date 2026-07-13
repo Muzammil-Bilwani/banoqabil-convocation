@@ -7,12 +7,13 @@ function escapeHtml(value: string | number): string {
     .replace(/>/g, '&gt;')
 }
 
-function buildReceiptHtml(result: PassActionResponse): string {
+function buildReceiptHtml(result: PassActionResponse, reprint = false): string {
   const { student, pass } = result
   const time = new Date().toLocaleString('en-PK', {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
+  const footerLabel = reprint ? 'Reprinted' : 'Attended'
 
   return `<!doctype html>
 <html>
@@ -105,12 +106,12 @@ function buildReceiptHtml(result: PassActionResponse): string {
     Congratulations on your achievement.
   </div>
   <div class="divider"></div>
-  <div class="footer">Attended: ${escapeHtml(time)}</div>
+  <div class="footer">${footerLabel}: ${escapeHtml(time)}</div>
 </body>
 </html>`
 }
 
-export function printPassReceipt(result: PassActionResponse) {
+export function printPassReceipt(result: PassActionResponse, reprint = false) {
   const iframe = document.createElement('iframe')
   iframe.style.position = 'fixed'
   iframe.style.right = '0'
@@ -127,7 +128,7 @@ export function printPassReceipt(result: PassActionResponse) {
   }
 
   doc.open()
-  doc.write(buildReceiptHtml(result))
+  doc.write(buildReceiptHtml(result, reprint))
   doc.close()
 
   const cleanup = () => setTimeout(() => iframe.remove(), 500)

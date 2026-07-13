@@ -88,6 +88,16 @@ export function markKitReceived(passNumber: string) {
   )
 }
 
+// Reprint a lost token: reuses the attendance endpoint with reprint=true, which
+// returns the pass WITHOUT changing status, so a slip can be reprinted at any
+// stage (attended, kit, etc.).
+export function reprintToken(passNumber: string) {
+  return authRequest(
+    `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/attend?reprint=true`,
+    { method: 'PATCH' },
+  )
+}
+
 // Smart certificate issuance: the backend advances the pass to
 // CertificateHandover from whatever the current state is (attended, or
 // kit handover/received), enforcing that attendance happened first and
