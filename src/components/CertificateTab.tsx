@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { Alert, Button, Flex, Input, Typography, type InputRef } from 'antd'
 import { InboxOutlined, SafetyCertificateOutlined } from '@ant-design/icons'
@@ -12,6 +12,11 @@ type Action = 'kit-received' | 'certificate'
 function CertificateTab() {
   const [passNumber, setPassNumber] = useState('')
   const inputRef = useRef<InputRef>(null)
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => inputRef.current?.focus())
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   const mutation = useMutation({
     mutationFn: ({ passNumber, action }: { passNumber: string; action: Action }) =>
@@ -57,7 +62,6 @@ function CertificateTab() {
         value={passNumber}
         onChange={(e) => setPassNumber(e.target.value)}
         onPressEnter={() => handleSubmit('certificate')}
-        autoFocus
         style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
       <Flex gap={12} style={{ width: '100%', maxWidth: 340 }}>
