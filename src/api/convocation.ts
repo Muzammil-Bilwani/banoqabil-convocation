@@ -88,6 +88,15 @@ export function markKitReceived(passNumber: string) {
   )
 }
 
+// Reprint a lost token: read-only lookup by pass number. Does NOT change the
+// pass status, so a slip can be reprinted at any stage (attended, kit, etc.).
+export function reprintToken(passNumber: string) {
+  return authRequest(
+    `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/reprint`,
+    { method: 'GET' },
+  )
+}
+
 // Smart certificate issuance: the backend advances the pass to
 // CertificateHandover from whatever the current state is (attended, or
 // kit handover/received), enforcing that attendance happened first and
