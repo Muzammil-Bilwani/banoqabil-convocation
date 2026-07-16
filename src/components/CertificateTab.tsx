@@ -48,7 +48,7 @@ function CertificateTab() {
       </div>
       <Flex vertical align="center" gap={4}>
         <Title level={4} style={{ margin: 0 }}>
-          Convocation Hand Over &amp; Certificate
+          Kit Receive &amp; Certificate Issue
         </Title>
         <Text type="secondary">
           Enter the pass number, then choose the action
