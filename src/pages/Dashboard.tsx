@@ -84,9 +84,9 @@ function Dashboard({ user, onLogout }: DashboardProps) {
                   <Flex align="center" gap={8}>
                     <SafetyCertificateOutlined />
                     <span className="tab-label-full">
-                      Hand Over & Certificate
+                      Kit Receive & Certificate Issue
                     </span>
-                    <span className="tab-label-short">Certificate</span>
+                    <span className="tab-label-short">Kit & Cert</span>
                   </Flex>
                 ),
                 children: <CertificateTab />,
