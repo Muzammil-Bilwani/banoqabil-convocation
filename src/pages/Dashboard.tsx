@@ -3,7 +3,6 @@ import {
   CheckCircleOutlined,
   GiftOutlined,
   LogoutOutlined,
-  PrinterOutlined,
   SafetyCertificateOutlined,
 } from '@ant-design/icons'
 
@@ -13,7 +12,6 @@ import type { User } from '../api/auth'
 import AttendanceTab from '../components/AttendanceTab'
 import KitHandoverTab from '../components/KitHandoverTab'
 import CertificateTab from '../components/CertificateTab'
-import ReprintTab from '../components/ReprintTab'
 
 const { Header, Content } = Layout
 const { Text } = Typography
@@ -92,17 +90,6 @@ function Dashboard({ user, onLogout }: DashboardProps) {
                   </Flex>
                 ),
                 children: <CertificateTab />,
-              },
-              {
-                key: 'reprint',
-                label: (
-                  <Flex align="center" gap={8}>
-                    <PrinterOutlined />
-                    <span className="tab-label-full">Reprint Token</span>
-                    <span className="tab-label-short">Reprint</span>
-                  </Flex>
-                ),
-                children: <ReprintTab />,
               },
             ]}
           />
