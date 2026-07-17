@@ -26,6 +26,8 @@ export interface PassActionResponse {
   passNumber: number
   student: Student
   pass: ConvocationPass
+  /** True when the pass was already attended and the token was just reissued. */
+  reprinted?: boolean
 }
 
 async function authRequest(
@@ -64,6 +66,9 @@ async function authRequest(
   return data as PassActionResponse
 }
 
+// Marks attendance on first scan. If the pass is already attended (or at a kit
+// stage, but not yet certified), the backend leaves the status untouched and
+// just returns the pass with reprinted=true so the token can be printed again.
 export function markAttendance(passNumber: string) {
   return authRequest(
     `/convocation-passes/pass-number/${encodeURIComponent(passNumber)}/attend`,

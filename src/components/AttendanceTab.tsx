@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { Alert, Button, Flex, Input, Typography, type InputRef } from 'antd'
+import { Alert, Button, Flex, Input, Switch, Typography, type InputRef } from 'antd'
 import { CheckCircleOutlined, PrinterOutlined } from '@ant-design/icons'
 import { markAttendance } from '../api/convocation'
 import { printPassReceipt } from '../utils/printPass'
@@ -8,16 +8,35 @@ import ScanResult from './ScanResult'
 
 const { Title, Text } = Typography
 
+// Staff can turn auto-printing off when the printer misbehaves; the choice is
+// remembered so it survives a reload.
+const AUTO_PRINT_KEY = 'convocation:autoPrint'
+
+function readAutoPrint(): boolean {
+  return localStorage.getItem(AUTO_PRINT_KEY) !== 'false'
+}
+
 function AttendanceTab() {
   const [passNumber, setPassNumber] = useState('')
+  const [autoPrint, setAutoPrint] = useState(readAutoPrint)
   const inputRef = useRef<InputRef>(null)
+
+  const handleAutoPrintChange = (checked: boolean) => {
+    setAutoPrint(checked)
+    localStorage.setItem(AUTO_PRINT_KEY, String(checked))
+  }
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => inputRef.current?.focus())
+    return () => cancelAnimationFrame(id)
+  }, [])
 
   const mutation = useMutation({
     mutationFn: markAttendance,
     onSuccess: (data) => {
       setPassNumber('')
       inputRef.current?.focus()
-      printPassReceipt(data)
+      if (autoPrint) printPassReceipt(data, data.reprinted)
     },
   })
 
@@ -52,7 +71,6 @@ function AttendanceTab() {
         value={passNumber}
         onChange={(e) => setPassNumber(e.target.value)}
         onPressEnter={handleSubmit}
-        autoFocus
         style={{ width: '100%', maxWidth: 340, height: 52 }}
       />
       <Button
@@ -67,6 +85,17 @@ function AttendanceTab() {
         Mark Attendance
       </Button>
 
+      <Flex align="center" gap={8}>
+        <Switch
+          size="small"
+          checked={autoPrint}
+          onChange={handleAutoPrintChange}
+        />
+        <Text type="secondary" style={{ fontSize: 13 }}>
+          {autoPrint ? 'Auto-print token' : 'Auto-print off'}
+        </Text>
+      </Flex>
+
       {mutation.isError && (
         <Alert
           type="error"
@@ -80,7 +109,7 @@ function AttendanceTab() {
           <ScanResult result={mutation.data} />
           <Button
             icon={<PrinterOutlined />}
-            onClick={() => printPassReceipt(mutation.data)}
+            onClick={() => printPassReceipt(mutation.data, mutation.data.reprinted)}
           >
             Print Again
           </Button>

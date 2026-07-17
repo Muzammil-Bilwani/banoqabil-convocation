@@ -60,12 +60,13 @@ function receiptStyles(): string {
   `
 }
 
-function receiptInnerHtml(result: PassActionResponse): string {
+function receiptInnerHtml(result: PassActionResponse, reprint = false): string {
   const { student, pass } = result
   const time = new Date().toLocaleString('en-PK', {
     dateStyle: 'medium',
     timeStyle: 'short',
   })
+  const footerLabel = reprint ? 'Reprinted' : 'Attended'
 
   return `
     <div class="title">Bano Qabil Convocation</div>
@@ -85,11 +86,11 @@ function receiptInnerHtml(result: PassActionResponse): string {
       Congratulations on your achievement.
     </div>
     <div class="divider"></div>
-    <div class="footer">Attended: ${escapeHtml(time)}</div>
+    <div class="footer">${footerLabel}: ${escapeHtml(time)}</div>
   `
 }
 
-export function printPassReceipt(result: PassActionResponse) {
+export function printPassReceipt(result: PassActionResponse, reprint = false) {
   // Clear any leftover node/style from a previous print.
   document.getElementById(RECEIPT_ID)?.remove()
   document.getElementById(STYLE_ID)?.remove()
@@ -100,7 +101,7 @@ export function printPassReceipt(result: PassActionResponse) {
 
   const node = document.createElement('div')
   node.id = RECEIPT_ID
-  node.innerHTML = receiptInnerHtml(result)
+  node.innerHTML = receiptInnerHtml(result, reprint)
 
   document.head.appendChild(style)
   document.body.appendChild(node)

@@ -205,9 +205,13 @@ body {
   flex: 1;
   justify-content: center;
   margin: 0 !important;
-  padding: 14px 8px;
+  padding: 14px 10px;
   transition: background 0.2s ease;
   border-radius: 10px 10px 0 0;
+}
+
+.full-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+  white-space: nowrap;
 }
 
 .full-tabs .ant-tabs-tab:hover {
@@ -245,6 +249,18 @@ body {
   display: none;
 }
 
+/* ---------- Tablet / small desktop: switch to compact labels ---------- */
+
+@media (max-width: 1024px) {
+  .tab-label-full {
+    display: none;
+  }
+
+  .tab-label-short {
+    display: inline;
+  }
+}
+
 /* ---------- Mobile ---------- */
 
 @media (max-width: 640px) {
@@ -279,28 +295,31 @@ body {
 
   .full-tabs .ant-tabs-nav-list {
     width: 100%;
+    gap: 0;
   }
 
   .full-tabs .ant-tabs-tab {
     flex: 1;
-    padding: 8px 2px;
+    padding: 10px 4px;
     font-size: 11px;
     min-width: 0;
   }
 
   .full-tabs .ant-tabs-tab .ant-tabs-tab-btn {
     width: 100%;
+    white-space: normal;
   }
 
   .full-tabs .ant-tabs-tab .ant-flex {
     flex-direction: column;
-    gap: 2px !important;
+    align-items: center;
+    gap: 5px !important;
     text-align: center;
-    line-height: 1.15;
+    line-height: 1.2;
   }
 
   .full-tabs .ant-tabs-tab .anticon {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .tab-label-full {
@@ -310,7 +329,6 @@ body {
   .tab-label-short {
     display: inline;
     white-space: normal;
-    word-break: break-word;
   }
 }
 
