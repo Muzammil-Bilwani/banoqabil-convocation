@@ -17,10 +17,16 @@ set "PROFILE=%LOCALAPPDATA%\bq-kiosk-profile"
 
 if not exist "%CHROME%" set "CHROME=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 
+REM Kill any running Chrome so the kiosk flags are not ignored.
+REM (A new chrome.exe attaches to an existing instance and drops the flags.)
+taskkill /F /IM chrome.exe /T >nul 2>&1
+timeout /t 2 /nobreak >nul
+
+REM Do NOT add --disable-print-preview: it disables the pipeline that
+REM --kiosk-printing uses to auto-confirm, which brings back the OS dialog.
 start "" "%CHROME%" ^
   --kiosk ^
   --kiosk-printing ^
-  --disable-print-preview ^
   --no-first-run ^
   --disable-infobars ^
   --disable-features=Translate ^
